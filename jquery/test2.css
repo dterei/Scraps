@@ -1,0 +1,104 @@
+.h3 {
+	font-size: large;
+}
+
+#searchheader {
+	margin-right: 2em;
+}
+#searchbox {
+	text-align: right;
+	margin-right: 2em;
+	width: 40%;
+}
+.searchimg {
+	margin-left: 2em;
+	height: 30px;
+	margin-bottom: -0.55em;
+}
+#sircalogo {
+	width: 60px;
+}
+
+#divide {
+	margin-top: 0;
+	padding: 0.1em;
+	margin: 0.8em 0;
+	background: #EBEFF9 none repeat scroll 0 0;
+	border-top: 1px solid #6B90DA;
+	clear: both;
+}
+
+.bold, .h3, .h4 {
+	font-weight: bold;
+}
+
+.h4 {
+	font-size: small;
+}
+
+.res-item {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin: 1em 0 auto auto;
+}
+.res-header {
+	font-weight: bold;
+	font-size: large;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.res-body {
+	font-size: medium;
+	max-width: 42em;
+}
+
+.res-stats {
+	font-size: small;
+	color: #ABABA8;
+}
+
+.res-show {
+	margin-left: 0.5em;
+}
+
+.highlight {
+	background-color: #FCFFA3;
+}
+
+.res-link {
+	font-size: small;
+}
+
+.res-links, a {
+	font-size: small;
+	color: #7777cc;
+	text-decoration: underline;
+}
+
+a:link {
+	color: #000000;
+}
+a:active {
+	color: #7777cc;
+}
+a:hover {
+	color: #ff0000;
+	text-decoration: none;
+}
+
+.res {
+	margin: 0;
+	padding: 0;
+}
+
+.right-box {
+	margin-top: 1em;
+	margin-right: 1em;
+	margin-bottom: auto;
+	margin-left: auto;
+	width: 20em;
+	float: right;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>jQuery Tests - Case 1</title>
+
+		<style type="text/css">
+			a.test { font-weight: bold; }
+		</style>
+
+		<script type="text/javascript" src="jquery-1.2.6.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+					$("#link1").click(function(event){
+						//alert("Thanks for all the fish!");
+						event.preventDefault();
+						//alert("HAHAH! YOU ARE MINE MINE MINE");
+					});
+
+					$("a.link").click(function(event){
+						$("a.link").addClass("test");
+					});
+
+					$("#link2").click(function(event){
+						$("a.link").removeClass("test");
+						event.preventDefault();
+						$(".slidein,#textb1").fadeIn("slow");
+					});
+
+					$("#link3").click(function(event){
+						event.preventDefault();
+						$(".slidein,#textb1").fadeOut("slow");
+					});
+			});
+		</script>
+
+	</head>
+
+	<body>
+		<div>
+			<a class="link" id="link1" href="http://jquery.com/">jQuery</a> <br>
+			<a class="link" id="link2" href="http://jquery.com/">jQuery</a> <br>
+			<a class="link" id="link3" href="http://jquery.com/">jQuery</a> <br>
+			<p>
+				<div id="textb2">
+					Hello World!<span class="slidein"> Here is some extra text</span> ok
+				</div>
+			</p>
+		</div>
+	</body>
+</html>
