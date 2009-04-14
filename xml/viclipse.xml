@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hierachy>
+	<level>
+		<class>WorkBenchPart</class>
+		<description></description>
+		<level>
+			<class>EditorPart</class>
+			<description>Abstract base implementation of all workbench editors. <p>This class should be subclassed by clients wishing to define new editors. The name of the subclass should be given as the <code>"class"</code> attribute in a <code>editor</code> extension contributed to the workbench's view extension point (named <code>"org.eclipse.ui.editors"</code>). For example, the plug-in's XML markup might contain:<pre> &lt;extension point="org.eclipse.ui.editors"&gt;      &lt;editor id="com.example.myplugin.ed"         name="My Editor"         icon="./images/cedit.gif" 		   extensions="foo" 		   class="com.example.myplugin.MyFooEditor"  		   contributorClass="com.example.myplugin.MyFooEditorContributor"       /&gt; &lt;/extension&gt; </pre> where <code>com.example.myplugin.MyEditor</code> is the name of the <code>EditorPart</code> subclass.</p><p>Subclasses must implement the following methods: <ul><li><code>IEditorPart.init</code> - to initialize editor when assigned its site</li><li><code>IWorkbenchPart.createPartControl</code> - to create the editor's controls </li><li><code>IWorkbenchPart.setFocus</code> - to accept focus</li><li><code>IEditorPart.isDirty</code> - to decide whether a significant change has occurred</li><li><code>IEditorPart.doSave</code> - to save contents of editor</li><li><code>IEditorPart.doSaveAs</code> - to save contents of editor</li><li><code>IEditorPart.isSaveAsAllowed</code> - to control Save As</li></ul></p><p>Subclasses may extend or reimplement the following methods as required:<ul><li><code>IExecutableExtension.setInitializationData</code> - extend to provide additional initialization when editor extension is instantiated</li><li><code>IWorkbenchPart.dispose</code> - extend to provide additional cleanup</li><li><code>IAdaptable.getAdapter</code> - reimplement to make the editor adaptable</li></ul></p>
+			</description>
+			<implements>
+				<interface>
+					<class>IEditorPart</class>
+					<description>
+An editor is a visual component within a workbench page. It is
+typically used to edit or browse a document or input object. The input 
+is identified using an <code>IEditorInput</code>.  Modifications made 
+in an editor part follow an open-save-close lifecycle model (in contrast 
+to a view part, where modifications are saved to the workbench 
+immediately).
+<p>
+An editor is document or input-centric.  Each editor has an input, and only
+one editor can exist for each editor input within a page.  This policy has 
+been designed to simplify part management.  
+</p><p>
+An editor should be used in place of a view whenever more than one instance
+of a document type can exist.
+</p><p>
+This interface may be implemented directly.  For convenience, a base
+implementation is defined in <code>EditorPart</code>.
+</p>
+<p>
+An editor part is added to the workbench in two stages:
+<ol>
+	<li>An editor extension is contributed to the workbench registry. This
+   extension defines the extension id, extension class, and the file 
+   extensions which are supported by the editor.</li>
+ <li>An editor part based upon the extension is created and added to the
+   workbench when the user opens a file with one of the supported file
+   extensions (or some other suitable form of editor input).</li>
+</ol>
+</p>
+<p>
+All editor parts implement the <code>IAdaptable</code> interface; extensions
+are managed by the platform's adapter manager.
+</p>
+
+@see org.eclipse.ui.IWorkbenchPage#openEditor(IEditorInput, String)
+@see org.eclipse.ui.part.EditorPart
+					</description>
+				</interface>
+			</implements>
+			<level>
+				<class>AbstractTextEditor</class>
+				<description>Abstract base implementation of a text editor. <p>Subclasses are responsible for configuring the editor appropriately. The standard text editor, <code>TextEditor</code>, is one such example.</p><p>If a subclass calls {@linkplain #setEditorContextMenuId(String) setEditorContextMenuId} the argument is used as the id under which the editor's context menu is registered for extensions. If no id is set, the context menu is registered under <b>[editor_id].EditorContext</b> whereby [editor_id] is replaced with the editor's part id.  If the editor is instructed to run in version 1.0 context menu registration compatibility mode, the latter form of the registration even happens if a context menu id has been set via {@linkplain #setEditorContextMenuId(String) setEditorContextMenuId}. If no id is set while in compatibility mode, the menu is registered under {@link #DEFAULT_EDITOR_CONTEXT_MENU_ID}.</p><p>If a subclass calls {@linkplain #setRulerContextMenuId(String) setRulerContextMenuId} the argument is used as the id under which the ruler's context menu is registered for extensions. If no id is set, the context menu is registered under <b>[editor_id].RulerContext</b> whereby [editor_id] is replaced with the editor's part id.  If the editor is instructed to run in version 1.0 context menu registration compatibility mode, the latter form of the registration even happens if a context menu id has been set via {@linkplain #setRulerContextMenuId(String) setRulerContextMenuId}. If no id is set while in compatibility mode, the menu is registered under {@link #DEFAULT_RULER_CONTEXT_MENU_ID}.</p>
+			</description>
+				<implements>
+					<interface>
+						<class>ITextEditor</class>
+					</interface>
+					<interface>
+						<class>IReusableEditor</class>
+					</interface>
+					<interface>
+						<class>ITextEditorExtension</class>
+					</interface>
+					<interface>
+						<class>ITextEditorExtension2</class>
+					</interface>
+					<interface>
+						<class>ITextEditorExtension3</class>
+					</interface>
+					<interface>
+						<class>ITextEditorExtension4</class>
+					</interface>
+					<interface>
+						<class>INavigatorLocationProvider</class>
+					</interface>
+					<interface>
+						<class>ISavableSouce</class>
+					</interface>
+					<interface>
+						<class>IPeristableEditor</class>
+					</interface>
+				</implements>
+				<level>
+					<class>StatusTextEditor</class>
+					<description> Capable of handling input elements that have an associated status with them. @since 2.0
+					</description>
+					<level>
+						<class>AbstractDecoratedTextEditor</class>
+						<description>
+An intermediate editor comprising functionality not present in the leaner <code>AbstractTextEditor</code>, but used in many heavy weight (and especially source editing) editors, such as line numbers, change ruler, overview ruler, print margins, current line highlighting, etc. @since 3.0
+						</description>
+						<level>
+							<class>JavaEditor</class>
+							<description>Java specific text editor.</description>
+							<implements>
+								<interface>
+									<class>IViewPartInputProvider</class>
+									<description>Interface common to all view parts that provide an input.</description>
+								</interface>
+							</implements>
+						</level>
+						<level>
+							<class>TextEditor</class>
+						</level>
+					</level>
+				</level>
+				<level>
+					<class>MultiPageEditorPart</class>
+				</level>
+			</level>
+		</level>
+	</level>	
+</hierachy>
+
