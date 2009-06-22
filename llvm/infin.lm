@@ -1,0 +1,27 @@
+@PN = internal constant [4 x i8] c"%f\0A\00"
+
+declare i32 @printf(i8*, ...)
+
+define i32 @main()
+{
+	entry:
+		br label %loop_start
+
+	loop_start:
+		%n = phi double [ 1000000000.0, %entry ], [ %n.2, %loop_main ]
+		%v = phi double [ 0.0, %entry ], [ %v.2, %loop_main ]
+		%nis0 = fcmp oeq double 0.0, %n
+		br i1 %nis0, label %loop_end, label %loop_main
+
+	loop_main:
+		%n.2 = sub double %n, 1.0
+		%vt = fdiv double 1.0, %n
+		%v.2 = add double %v, %vt
+		br label %loop_start
+
+	loop_end:
+		%pstr = getelementptr [4 x i8]* @PN, i32 0, i32 0
+		call i32 (i8*, ...)* @printf(i8* %pstr , double %v)
+		ret i32 0
+}
+
