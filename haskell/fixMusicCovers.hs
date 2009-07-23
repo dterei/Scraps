@@ -2,7 +2,7 @@ module Main where
 
 import IO
 import Maybe
-import Control.Monad (forM, liftM, when)
+import Control.Monad (forM_, liftM, when)
 import System.Directory
 import Directory
 import System.FilePath
@@ -26,7 +26,7 @@ getRecursiveDirectories root iniMaster = do
 		return ())
 	names <- getDirectoryContents root
 	let dirs = filter (`notElem` [".", ".."]) names
-	sucess <- forM dirs $ \f -> do
+	forM_ dirs $ \f -> do
 		let fullpath = root </> f
 		let file = dropExtensions f
 		isDir <- doesDirectoryExist fullpath
