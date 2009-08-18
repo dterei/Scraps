@@ -1,4 +1,4 @@
-
+-- Test of using data defenitions to create a kind of interface
 data KindofInterface
 	= KindofInterface {
 		simpleAdd :: Int -> Int -> Int,
@@ -17,11 +17,8 @@ revImp = KindofInterface {
 	simpleSub = \a b -> a + b
 }
 
-doAdd :: KindofInterface -> Int -> Int-> Int
-doAdd a = simpleAdd a
-
 main = do
 	putStrLn "Hello World"
-	putStrLn $ show $ doAdd implem 1 2
-	putStrLn $ show $ doAdd revImp 1 2
+	putStrLn $ show $ simpleAdd implem 1 2
+	putStrLn $ show $ simpleAdd revImp 1 2
 
