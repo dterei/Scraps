@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>SVG in HTML Image element detection</title>
+		<style type="text/css">
+			<!--
+			body {
+				text-align: center;
+				margin: 1.5em;
+				padding: 0;
+				background: #FFF;
+				color: #000;
+				font-family: "Baskerville", serif;
+				font-size: 125%;
+			}
+			-->
+		</style>
+		<script type="text/javascript" src="svgimg.js"></script>
+	</head>
+	<body>
+		<img id="svgImgTest" src="./svg-test.svg"/>
+
+		<script type="text/javascript">
+			window.onload = function() {
+				var svgImg = document.getElementById("svgImgTest");
+				var elm = document.createElement("h2");
+				if (IsImageOk(svgImg)) {
+					elm.innerHTML = "SVG is Go!";
+				} else {
+					elm.innerHTML = "No SVG!";
+				}
+				svgImg.parentNode.removeChild(svgImg);
+				(document.body||document.documentElement).appendChild(elm);
+			}
+		</script>
+		Is it supported?
+	</body>
+</html>
