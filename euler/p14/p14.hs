@@ -10,4 +10,3 @@ pmax x n = x `max` (collatzLen 1 n, n)
 
 main = print . solve $ 1000000
     where solve xs = foldl pmax (1,1) [2..xs-1]
-
