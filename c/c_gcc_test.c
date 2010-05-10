@@ -2,7 +2,7 @@
 
 int c;
 __thread int d;
-register int R1 __asm__ ("%" "i5");
+register int R1 __asm__ ("%" "r15");
 
 int main(void)
 {
