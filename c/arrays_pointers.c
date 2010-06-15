@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int  a[] = {0,1,2,3,4,5};
+char b[] = {'x', 'y', 'z'};
+char array[] = {'a', 'b', 'c', 'd', 'e', 'f', 'h'};
+char *pointer = array;
+
 int main(void)
 {
-	char b[] = {'x', 'y', 'z'};
-	char array[] = {'a', 'b', 'c', 'd', 'e', 'f', 'h'};
-	char *pointer = array;
-
+	printf("a: p = %p, d = %d, size = %d\n, a[0] = %d\n", a, a, sizeof(a), a[0]);
 	printf("array: p = %p, d = %d, size = %d\n", array, array, sizeof(array));
 	printf("pointer: p = %p, d = %d, size = %d\n", pointer, pointer, sizeof(pointer));
 
