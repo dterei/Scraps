@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-#define TOS(x) #x
+// #define TOS(x) ".text,\"ax\",@progbits\n.subsection "#x" #"
+#define TOS(x) ".text;.text "#x" #"
 
 #define INF_A TOS(100)
 #define FUN_A TOS(8192)
@@ -14,11 +15,11 @@ typedef struct info_table {
 	const int args;
 } info_table;
 
-const info_table a_info_tb __attribute__ ((section (".text,\"ax\",@progbits\n\t.subsection "INF_A" #"))) = {-1, 1, 231};
+const info_table a_info_tb __attribute__ ((section (INF_A))) = {-1, 1, 231};
 
-int a_entry() __attribute__ ((section (".text,\"ax\",@progbits\n\t.subsection "FUN_A" #")));
+int a_entry() __attribute__ ((section (FUN_A)));
 
-int b_entry() __attribute__ ((section (".text,\"ax\",@progbits\n\t.subsection "FUN_B" #")));
+int b_entry() __attribute__ ((section (FUN_B)));
 
 int a_entry()
 {
@@ -26,7 +27,7 @@ int a_entry()
 	return *p;
 }
 
-const info_table b_info_tb __attribute__ ((section (".text,\"ax\",@progbits\n\t.subsection "INF_B" #"))) = {-2, 0, 952};
+const info_table b_info_tb __attribute__ ((section (INF_B))) = {-2, 0, 952};
 
 int main(void)
 {
