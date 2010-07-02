@@ -12,10 +12,17 @@ int head(int a[])
 	return a[0];
 }
 
+int previous(int a[])
+{
+	return a[-1];
+}
+
 int main(void)
 {
-	int one = head(my_array);
+	int one  = head(my_array);
+	int prev = previous(&my_array[1]);
 	printf("Head of array => %d\n", one);
+	printf("Head of array => %d\n", prev);
 	return 0;
 }
 
