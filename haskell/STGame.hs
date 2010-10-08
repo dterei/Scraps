@@ -15,9 +15,6 @@
  -- State = game is on or off & current score
  --       = (Bool, Int)
  
- type GameValue = Int
- type GameState = (Bool, Int)
- 
  playGame :: String -> Int
  playGame s = runST $ do
      ref <- newSTRef (False, 0)

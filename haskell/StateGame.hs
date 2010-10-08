@@ -14,9 +14,6 @@
  -- State = game is on or off & current score
  --       = (Bool, Int)
  
- type GameValue = Int
- type GameState = (Bool, Int)
- 
  playGame :: String -> Int
  playGame s = evalState (playGame' s) (False, 0)
     where
