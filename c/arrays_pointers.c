@@ -3,13 +3,14 @@
 
 int  a[] = {0,1,2,3,4,5};
 char b[] = {'x', 'y', 'z'};
-char array[] = {'a', 'b', 'c', 'd', 'e', 'f', 'h'};
+char array[] = {'a', 'b', 'c', 'd', 'e', 'f'};
 char *pointer = array;
 
 int main(void)
 {
 	printf("a: p = %p, d = %d, size = %d\n, a[0] = %d\n", a, a, sizeof(a), a[0]);
-	printf("array: p = %p, d = %d, size = %d\n", array, array, sizeof(array));
+	printf("array: p = %p, d = %d, size = %d\n", (void *) (array + 1), array, sizeof(array));
+	printf("&array: p = %p, d = %d, size = %d\n", (void *) (&array + 1), &array, sizeof(&array));
 	printf("pointer: p = %p, d = %d, size = %d\n", pointer, pointer, sizeof(pointer));
 
 	printf("array: size = %d\n", array_size(array));
