@@ -1,15 +1,13 @@
 module Main where
 
-import IO
-import Maybe
 import Control.Monad (forM_, liftM, when)
 import System.Directory
-import Directory
 import System.FilePath
-import System
+import System.IO
+import System.Process
 
 main = do
-	system "echo Starting..."
+	putStrLn "Starting..."
 	root <- canonicalizePath "./"
 	paths <- getRecursiveDirectories root (root </> "desktopMaster.ini")
 	return()
