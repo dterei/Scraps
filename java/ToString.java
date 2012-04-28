@@ -26,6 +26,13 @@ class ToString {
 		System.out.println("Printing String(char) + int...");
 		char[] chars = {c};
 		System.out.println(new String(chars) + i);
+
+		String s1 = "Hello";
+		String s2 = " World ";
+		String s3 = s1 + s2;
+		System.out.println("Printing String + String...");
+		System.out.println(s1 + s2);
+		System.out.println(s3);
 	}
 
 }
