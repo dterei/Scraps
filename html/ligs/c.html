@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head><script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script>
+
+<title>Heroku | Add-ons</title>
+<meta content='text/html; charset=UTF-8' http-equiv='content-type'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+<meta name='description'>
+<meta name='google' value='notranslate'>
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="CY5SGXS246rT0x41eO5bvFl3bxZs9ruFSYdTcPUOTno="/>
+
+<link href="//nav.heroku.com/header.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/marketplace.css?1349326497" media="screen" rel="stylesheet" type="text/css" />
+<script src="/javascripts/jquery.min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/jquery-ui-1.8.23.custom.min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/jquery_ujs.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/underscore-min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/backbone-min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/json2.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/mousetrap.min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/jquery.masonry.min.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/jquery.select-text.js?1349326416" type="text/javascript"></script>
+<script src="/javascripts/marketplace.js?1349326473" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="feature-flagged"><p>Welcome to the new Add-ons Marketplace. <a href="/marketplace/switch">Switch back to the old one</a></p></div>
+<div id="heroku_header"><div class="container"><a href="/marketplace" class="logo"><span>Heroku Addons</span></a><ul class="nav"><li><a href="https://dashboard.heroku.com">Apps</a></li>
+<li><a href="/marketplace" class="active">Addons</a></li>
+<li><a href="https://devcenter.heroku.com">Dev Center</a></li>
+<li><a href="https://help.heroku.com">Help</a></li>
+<li><a href="https://dashboard.heroku.com/account" class="gravatar"><img alt="Gravatar" height="80" src="https://secure.gravatar.com/avatar/91b085038eb87b10362a10e1e0e2929f?default=http%3A%2F%2Fassets.heroku.com.s3.amazonaws.com%2Faddons.heroku.com%2Fgravatar_default.png" width="80" /></a></li>
+<li><a href="/logout">Logout</a></li></ul></div></div>
+<div id='content'>
+<style>
+.custom_color{color:#ade54e !important}.custom_background_color{background-color:#ade54e !important}.addon_header h1{background-image:url(https://s3.amazonaws.com/assets.heroku.com/addons.heroku.com/catalogs/322/original.png)}.addon_header ul.menu>li a.iconic{background:-webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #ade54e), color-stop(100%, #bdea71));background:-webkit-linear-gradient(bottom, #ade54e 0%,#bdea71);background:-moz-linear-gradient(bottom, #ade54e 0%,#bdea71);background:-o-linear-gradient(bottom, #ade54e 0%,#bdea71);background:linear-gradient(bottom, #ade54e 0%,#bdea71)}#addons_show ul#plan_options>li.active,#addons_show ul#plan_options>li:hover{background-color:#ade54e}#addons_show #provisionator input.button{background:-webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #ade54e), color-stop(100%, #b5e75f));background:-webkit-linear-gradient(bottom, #ade54e 0%,#b5e75f);background:-moz-linear-gradient(bottom, #ade54e 0%,#b5e75f);background:-o-linear-gradient(bottom, #ade54e 0%,#b5e75f);background:linear-gradient(bottom, #ade54e 0%,#b5e75f);background-color:#ade54e;-webkit-box-shadow:#000 1px 1px 5px;-moz-box-shadow:#000 1px 1px 5px;box-shadow:#000 1px 1px 5px}#addons_edit a.iconic{background-color:#ade54e}#addons_edit button{background-color:#ade54e !important}#addons_edit input:focus,#addons_edit textarea:focus{outline-color:#436032}#edit_offerings input.submit{background-color:#ade54e !important}
+
+</style>
+
+<div id='addons_show'>
+<div class='addon_header'>
+<h1>
+MemCachier
+<span class='summary'>The easiest, most advanced memcache.  Start with 25MB free.</span>
+</h1>
+<ul class='menu'>
+<li class='cli'>heroku addons:add memcachier</li>
+<!-- /%li= iconic_link_to("Add", "add", "#", id: "quick_add") -->
+</ul>
+</div>
+<ul class='benefits disabled'>
+<li class='last'>
+<div class='content'>
+<h3 class='custom_color'>
+<span class='icon'>code</span>
+<span class='title'>Never change your client code</span>
+</h3>
+<p>You'll never need to make a code change with MemCachier as your cache grows. Our architecture lets us add cache servers without requiring you to change your code.</p>
+
+</div>
+</li>
+<li>
+<div class='content'>
+<h3 class='custom_color'>
+<span class='icon'>config</span>
+<span class='title'>No servers; no daemons</span>
+</h3>
+<p>Never create an instance. Never worry about how much memory to have per machine. Never SSH to a server, reboot a server, configure anything, rotate logs, or worry about DNS. Worry about your app instead — we do the rest for you.</p>
+
+</div>
+</li>
+<li>
+<div class='content'>
+<h3 class='custom_color'>
+<span class='icon'>layer</span>
+<span class='title'>High availability</span>
+</h3>
+<p>Your cache is spread across many servers. When one of those servers goes down, you’ll only lose a small percentage of your cache and hence only see a small increase in cache misses.</p>
+
+</div>
+</li>
+<li class='last'>
+<div class='content'>
+<h3 class='custom_color'>
+<span class='icon'>linegraph</span>
+<span class='title'>Analytics dashboard</span>
+</h3>
+<p>Our analytics dashboard gives you usage insights to help you get more out of your cache.</p>
+
+</div>
+</li>
+<li>
+<div class='content'>
+<h3 class='custom_color'>
+<span class='icon'>bank</span>
+<span class='title'>Enterprise ready</span>
+</h3>
+<p>For inquiries about enterprise offerings with SLAs, dedicated clusters, 24/7 support, and larger cache sizes, please contact sales@memcachier.com or call +1 (415) 364-8649.</p>
+
+</div>
+</li>
+</ul>
+
+<div id='plan_selector'>
+<h2 class='ruled'>Plans</h2>
+<ul id='plan_options'>
+<li data-addon_name='MemCachier 10 GB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='true' data-feature249='true' data-feature250='10 GB' data-full_slug='memcachier:10000' data-price_label='$550/mo'>
+<span class='name'>10 GB</span>
+<span class='price'>$550/mo</span>
+</li>
+<li data-addon_name='MemCachier 5 GB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='true' data-feature249='false' data-feature250='5 GB' data-full_slug='memcachier:5000' data-price_label='$300/mo'>
+<span class='name'>5 GB</span>
+<span class='price'>$300/mo</span>
+</li>
+<li data-addon_name='MemCachier 2.5 GB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='true' data-feature249='false' data-feature250='2.5 GB' data-full_slug='memcachier:2500' data-price_label='$165/mo'>
+<span class='name'>2.5 GB</span>
+<span class='price'>$165/mo</span>
+</li>
+<li data-addon_name='MemCachier 1 GB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='true' data-feature249='false' data-feature250='1 GB' data-full_slug='memcachier:1000' data-price_label='$70/mo'>
+<span class='name'>1 GB</span>
+<span class='price'>$70/mo</span>
+</li>
+<li data-addon_name='MemCachier 500 MB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='false' data-feature249='false' data-feature250='500 MB' data-full_slug='memcachier:500' data-price_label='$40/mo'>
+<span class='name'>500 MB</span>
+<span class='price'>$40/mo</span>
+</li>
+<li data-addon_name='MemCachier 250 MB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='false' data-feature249='false' data-feature250='250 MB' data-full_slug='memcachier:250' data-price_label='$25/mo'>
+<span class='name'>250 MB</span>
+<span class='price'>$25/mo</span>
+</li>
+<li data-addon_name='MemCachier 100 MB' data-feature242='true' data-feature243='true' data-feature244='true' data-feature245='true' data-feature247='true' data-feature248='false' data-feature249='false' data-feature250='100 MB' data-full_slug='memcachier:100' data-price_label='$15/mo'>
+<span class='name'>100 MB</span>
+<span class='price'>$15/mo</span>
+</li>
+<li data-addon_name='MemCachier Developer' data-feature242='false' data-feature243='true' data-feature244='false' data-feature245='false' data-feature247='false' data-feature248='false' data-feature249='false' data-feature250='25 MB' data-full_slug='memcachier:dev' data-price_label='Free'>
+<span class='name'>Developer</span>
+<span class='price'>Free</span>
+</li>
+</ul>
+<div class='main'>
+<ul id='features'>
+<li class='filesize' data-datatype='filesize' data-max='10737418240' id='feature250'>
+<span class='name'>Bucket Size</span>
+<span class='value'></span>
+</li>
+<li class='boolean' id='feature243'>
+<span class='name'>Basic Analytics Dashboard</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature242'>
+<span class='name'>Production Ready</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature244'>
+<span class='name'>Fully Managed</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature245'>
+<span class='name'>24/7 Monitoring</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature247'>
+<span class='name'>9am-5pm (PST) Support</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature248'>
+<span class='name'>High availability cluster</span>
+<span class='value custom_color'>check</span>
+</li>
+<li class='boolean' id='feature249'>
+<span class='name'>24/7 Support</span>
+<span class='value custom_color'>check</span>
+</li>
+</ul>
+<form accept-charset="UTF-8" action="/marketplace/resources" data-remote="true" id="provisionator" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="CY5SGXS246rT0x41eO5bvFl3bxZs9ruFSYdTcPUOTno=" /></div>
+<div class='container'>
+<a href="/login">Log in to add this addon.</a>
+</div>
+</form>
+
+</div>
+</div>
+
+
+<div data-slug='memcachier' id='docs' style='display:none'>
+<h2 class='ruled'>Documentation</h2>
+<ul id='toc'></ul>
+</div>
+</div>
+
+<footer>
+<ul class='nav'>
+<li>
+<a class='changelog' href='/changelog'>
+<span class='icon'>feed</span>
+<span class='label'>Addons Changelog</span>
+</a>
+</li>
+<li>
+<a class='twitter' href='https://twitter.com/herokuaddons'>
+<span class='icon'>twitter</span>
+<span class='label'>Twitter</span>
+</a>
+</li>
+<li>
+<a class='provider' href='/provider'>
+<span class='icon'>add</span>
+<span class='label'>Become an Addon Provider</span>
+</a>
+</li>
+</ul>
+</footer>
+<!-- / google analytics -->
+<script>
+  //<![CDATA[
+    var _gaq = _gaq || [];
+    _gaq.push(
+        ['api._setAccount', 'UA-2989055-1'],
+        ['api._setDomainName', 'addons.heroku.com'],
+        ['api._trackPageview'],
+    
+        ['addons._setAccount', 'UA-2989055-14'],
+        ['addons._setDomainName', 'addons.heroku.com'],
+        
+        
+        ['addons._trackPageview']
+    );
+    
+    // kiss metrics
+    var _kmq = _kmq || [];
+    var _kmk = _kmk || '29c8ed0e07660d5777379ea2970fd57d7c11ad16';
+    function _kms(u){
+      setTimeout(function(){
+        var d = document, f = d.getElementsByTagName('script')[0],
+        s = d.createElement('script');
+        s.type = 'text/javascript'; s.async = true; s.src = u;
+        f.parentNode.insertBefore(s, f);
+      }, 1);
+    }
+    
+    (function() {
+      // google analytics
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    
+      // crazy egg
+      setTimeout(function(){var a=document.createElement("script");
+      var b=document.getElementsByTagName("script")[0];
+      a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/2769.js?"+Math.floor(new Date().getTime()/3600000);
+      a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+    
+      // kiss metrics
+      _kms('//i.kissmetrics.com/i.js');
+      _kms('//doug1izaerwt3.cloudfront.net/' + _kmk + '.1.js');
+      
+    
+    })();
+  //]]>
+</script>
+
+<script>
+  //<![CDATA[
+    // mixpanel
+    (function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
+     for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
+    mixpanel.init("29765763b64bc1361f356d8ac08392a6");
+  //]]>
+</script>
+
+
+</div>
+<script type="text/javascript">if (!NREUMQ.f) { NREUMQ.f=function() {
+NREUMQ.push(["load",new Date().getTime()]);
+var e=document.createElement("script");
+e.type="text/javascript";e.async=true;e.src="https://d1ros97qkrwjf5.cloudfront.net/42/eum/rum.js";
+document.body.appendChild(e);
+if(NREUMQ.a)NREUMQ.a();
+};
+NREUMQ.a=window.onload;window.onload=NREUMQ.f;
+};
+NREUMQ.push(["nrfj","beacon-1.newrelic.com","fffd39df93",794905,"Jw1eF0MJCVRdQktYBxYJVRdBCgRbXR8FUQILDENMQg4KTw==",0.0,325,new Date().getTime(),"","56a8778ad377d91b","","",""])</script></body>
+</html>
