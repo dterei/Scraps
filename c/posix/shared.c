@@ -44,6 +44,7 @@
 
 #define SHD_NAME "testing-terei12aaadxx"
 #define SHD_SIZE 1000
+#define SHD_KEY 123
 
 int* X = NULL;
 int shd = 0;
@@ -55,9 +56,32 @@ inline void print_pid(void)
 	printf("My pid is %d and parents is %d\n", getpid(), getppid());
 }
 
-void mk_shared(void)
+// Use UNIX older standard functions of shmget, shmat.
+void mk_shared_unix(void)
 {
-	void *loc;
+	void* loc;
+
+	// can generate key with ftok instead...
+	shd = shmget(SHD_KEY, SHD_SIZE, SHM_R | SHM_W | IPC_CREAT);
+	if (shd < 0) {
+		perror("Error openning shared memory!");
+		exit(1);
+	}
+
+	loc = shmat(shd, NULL, 0);
+	if (loc == MAP_FAILED) {
+		perror("Error openning shared memory!");
+		exit(1);
+	}
+	printf("Shared memory initialized...%p\n", loc);
+
+	X = (int*) loc;
+}
+
+// Use POSIX standard functions of shm_open and mmap.
+void mk_shared_posix(void)
+{
+	void* loc;
 	struct stat stat;
 	int r;
 
@@ -90,11 +114,26 @@ void mk_shared(void)
 	X = (int*) loc;
 }
 
-void shut_program(void)
+void shut_program_unix(void)
 {
+	shmdt(X);
+	// NOTE: can use `ipcrm` on the command line to also kill
+	// and `ipcs` to view the status...
+	// XXX: Doesn't work! invlaid arguments returned...
+	if (shmctl (shd, IPC_RMID, (void *) X) == -1) {
+		perror("error in closing segment");
+		exit(1);
+	}
+	exit(0);
+}
+
+void shut_program_posix(void)
+{
+	// shm_open & mmap don't seem to work with the `ipcrm`
+	// and `ipcs` commands.
 	munmap(X, SHD_SIZE);
-	shm_unlink(SHD_NAME);
 	close(shd);
+	shm_unlink(SHD_NAME);
 	exit(0);
 }
 
@@ -103,16 +142,14 @@ int main(int argc, char *argv[])
 	int n;
 
 	if (argc > 1) {
-		printf("Arg 0: %s\n", argv[0]);
-		printf("Arg 1: %s\n", argv[1]);
 		n = atoi(argv[1]);
 		if (n >= 5) {
-			shut_program();
+			shut_program_posix();
 		}
 	}
 
 	print_pid();
-	mk_shared();
+	mk_shared_posix();
 
 	*X += 1;
 	printf("X is %d\n", *X);
