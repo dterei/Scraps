@@ -69,6 +69,7 @@ func main() {
 
   // TA <: B <: A
   fmt.Printf("%d\n", a.a())
+  print("Hello") // using bootstrap builtin print
   return
 }
 
