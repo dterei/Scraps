@@ -3,12 +3,24 @@ package main
 /*
  Go interfaces support a subtyping relation. However, the Go Language Reference
  never explicitly mentions subtyping, just 'subsets'. So lets play around.
+
+ Seems to be open, structural subtyping.
 */
 
 import "fmt"
 
 type A interface {
   a() int
+}
+
+// Interface subtyping is done through structural equivalence (i.e., just the
+// method sets). A := Aequiv
+type Aequiv interface {
+  a() int
+}
+
+type Aequiv2 interface {
+  A
 }
 
 // B is a subtype of A
@@ -42,6 +54,8 @@ func (this TA) b() int { return 1 }
 func main() {
   t := TA{}
   var a A
+  var ae Aequiv
+  var ae2 Aequiv2
   var b B
 
   // 'TA' is a subtype of 'B'
@@ -63,6 +77,12 @@ func main() {
   a = t
   // B <: A
   a = b
+
+  // A := Aequiv := Aequiv2
+  ae = a
+  a = ae
+  ae2 = ae
+  ae = ae2
 
   // A </: B
   //b = a
