@@ -23,7 +23,7 @@ unsigned long long gettime(void)
 		exit(1);
 	}
 
-	return t.tv_sec * SECONDS + t.tv_nsec * NANOSECONDS;
+	return (unsigned long long) t.tv_sec * SECONDS + t.tv_nsec * NANOSECONDS;
 }
 
 void test_start(void)
