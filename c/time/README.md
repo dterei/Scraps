@@ -14,16 +14,16 @@ crossing performance hit.
 
 ## Results
 
- * time          (s)  =>   4us
- * ftime         (ms) =>  39us
- * gettimeofday  (us) =>  30us
- * clock_gettime (ns) =>  26us (CLOCK_REALTIME)
- * clock_gettime (ns) =>   8us (CLOCK_REALTIME_COARSE)
- * clock_gettime (ns) =>  26us (CLOCK_MONOTONIC)
- * clock_gettime (ns) =>   9us (CLOCK_MONOTONIC_COARSE)
- * clock_gettime (ns) => 170us (CLOCK_PROCESS_CPUTIME_ID)
- * clock_gettime (ns) => 154us (CLOCK_THREAD_CPUTIME_ID)
- * cached_clock  (s)  =>   0us
+ * time          (s)  =>   4ns
+ * ftime         (ms) =>  39ns
+ * gettimeofday  (us) =>  30ns
+ * clock_gettime (ns) =>  26ns (CLOCK_REALTIME)
+ * clock_gettime (ns) =>   8ns (CLOCK_REALTIME_COARSE)
+ * clock_gettime (ns) =>  26ns (CLOCK_MONOTONIC)
+ * clock_gettime (ns) =>   9ns (CLOCK_MONOTONIC_COARSE)
+ * clock_gettime (ns) => 170ns (CLOCK_PROCESS_CPUTIME_ID)
+ * clock_gettime (ns) => 154ns (CLOCK_THREAD_CPUTIME_ID)
+ * cached_clock  (s)  =>   0ns
 
 Lower granularity time is the fastest by a fair amount for some
 reason. However, cached_clock is still the best, even with the vDSO
