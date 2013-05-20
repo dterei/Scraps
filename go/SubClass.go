@@ -29,6 +29,16 @@ type Args2 struct {
   CAS uint64
 }
 
+// So make Args3 a copy of Args but with Name and overriding the Id method...
+type Args3 struct {
+  Args
+  Name string
+}
+
+func (this *Args3) Id() uint {
+  return 666
+}
+
 // interfaces are used for polymorphism.
 // so Args & Args2 are distinct types still but Arg is a subtype of T and by
 // inheriting from Args, Args2 is also a subtype of T... saying subtype is wrong
@@ -60,17 +70,32 @@ func (this *Args) PolyFunc() {
 
 func main() {
   a := &Args{0, true, "Args"}
-  b := &Args2{Args{0, true, "Args2"}, 12}
+  b := &Args2{Args{1, true, "Args2"}, 12}
   // Can compose
   c := &Args2{*a, 13}
+  d := &Args3{Args{2, true, "Args3"}, "Args3"}
+
+  // DOESN'T COMPILE -- NOT SUBCLASSS
+  // var d Args
+  // d = *b
+  
+  // BUT ARGS2 inherits ARGS interfaces...
+  fmt.Printf("a.Id() = %d\n", T.Id(a))
+  fmt.Printf("b.Id() = %d\n", T.Id(b))
+
+  // Wow -- can do selective overriding of Id for subclass.
+  fmt.Printf("d.Id() = %d\n", T.Id(d))
 
   showArgs(a)
+  // DOENS'T COMPILE
+  // showArgs(b)
   // Can access anonymous struct by using its type
   // here the nesting is apparent!
   showArgs(&b.Args)
   showArgs(&c.Args)
 
   a.PolyFunc()
+  // BUT, b has Args methods?
   b.PolyFunc()
 
   idT(a)
