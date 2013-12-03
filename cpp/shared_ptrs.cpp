@@ -3,6 +3,7 @@
 
 int main(void)
 {
+  void *ptr;
 	// allocate memory with a traditional pointer to it.
 	int *raw_ptr = new int(10);
 	// setup a 'smart' pointer to it.
@@ -12,6 +13,8 @@ int main(void)
 	// pointer to the same memroy through the raw pointer.
 	std::shared_ptr<int> ref_ptr(raw_ptr);
 	std::shared_ptr<int> p2;
+
+  ptr = p2;
 
 	// XXX: Shouldn't do this.
 	std::shared_ptr<int> xxx_ref(raw_ptr);
