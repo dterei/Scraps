@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>CSS Box Sizing Test</title>
+  <style>
+    body {
+      padding: 0px 0px;
+      margin: 0px 0px;
+    }
+
+    #outer-box {
+      border: 2px solid red;
+      background: black;
+      margin: 50px auto 0px auto;
+      width: 40%; /* outbox fluid sizing...*/
+      height: 500px;
+    } 
+
+    #inner-box {
+      border: 2px solid yellow;
+      background: gray;
+      height: 100px;
+      padding: 10px 10px;
+
+      /* with no width declaration, inner-box will automatically be sized to
+         fill outer box (i.e., width + padding + border = outer-box size). This
+         is different than setting width: 100%! and we have no way in CSS to
+         explicitly express the default behaviour where padding is subtractive
+         from sizing rather than additive.
+      */
+      width: 100%;
+
+      /* want to explicitly set visible size at outer-box but this won't work
+         as rendered width is 100% + padding + border. If using a fluid design,
+         no solution in box layout model! (i.e., what if wanted 50%?) */
+      /* width: 50%; */
+
+      /* luckily CSS3 has a solution! a new property, box-sizing, that allows
+         choosing between an additive vs. subtractive sizing model. With
+         'border-box', when you specify width, this is the final rendered width.
+
+         i.e., border-box: rendered width = width
+               content-box: rendered width = width + padding + border
+       */
+      box-sizing: border-box;
+      /* box-sizing: content-box; /* default additive model */ */
+    }
+  </style>
+</head>
+
+<body>
+  <div id='outer-box'>
+    <div id='inner-box'>
+    </div>
+  </div>
+</body>
+</html>
