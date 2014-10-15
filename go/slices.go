@@ -7,7 +7,7 @@ package main
 
 import (
   "fmt"
-  "time"
+  // "time"
 )
 
 func rmSlice(slice []int) {
@@ -47,17 +47,36 @@ func rmSlice(slice []int) {
 }
 
 func main() {
-  slice := make([]int, 0, 100)
-  for i := 0; i < 10; i++ {
-    slice = append(slice, i)
-  }
+  s1 := make([]int, 0, 5)
+  // for i := 0; i < 10; i++ {
+  //   s1 = append(s1, i)
+  // }
 
-  fmt.Println("(main) slice[0]:", slice[0])
-  go rmSlice(slice)
-  fmt.Println("(main) slice len:", len(slice))
+  fmt.Println(s1)
 
-  time.Sleep(4 * time.Second)
-  fmt.Println("(main) slice len:", len(slice))
-  fmt.Println("(main) slice[0]:", slice[0])
+  s2 := append(s1, 1, 2)
+
+  fmt.Println(s1)
+  fmt.Println(s1[0:cap(s1)])
+
+  s3 := append(s2, 3, 4, 5, 6)
+
+  fmt.Println(s1)
+  fmt.Println(s1[0:cap(s1)])
+
+  fmt.Println(s2)
+  fmt.Println(s2[0:cap(s2)])
+
+  fmt.Println(s3)
+  fmt.Println(s3[0:cap(s3)])
+
+
+  // fmt.Println("(main) slice[0]:", slice[0])
+  // go rmSlice(slice)
+  // fmt.Println("(main) slice len:", len(slice))
+  //
+  // time.Sleep(4 * time.Second)
+  // fmt.Println("(main) slice len:", len(slice))
+  // fmt.Println("(main) slice[0]:", slice[0])
 }
 
