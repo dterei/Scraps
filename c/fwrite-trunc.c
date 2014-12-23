@@ -16,12 +16,12 @@ main(int argc, char *argv[])
 	if (argc != 4)
 	{ usageExit(argv[0]); }
 
-	FILE *fp = fopen(argv[1], "+w");
+	FILE *fp = fopen(argv[1], "w+");
 	int len = atoi(argv[2]);
 	char c = argv[3][0];
 
 	if (fp == NULL || len <= 0)
-	{ usageExit(argv[0]); }
+  { usageExit(argv[0]); }
 
 	int i;
 	for (i = 0; i < len; i++)
