@@ -11,8 +11,13 @@ func main() {
 	args := os.Args
 
 	if len(args) == 1 {
+		var attr syscall.ProcAttr
+		var sattr syscall.SysProcAttr
+		attr.Files = []uintptr{uintptr(syscall.Stdin), uintptr(syscall.Stdout), uintptr(syscall.Stderr)}
+		attr.Sys = &sattr
+
 		now := time.Now()
-		_, err := syscall.ForkExec("Exec", []string{"Exec", "dont"}, nil)
+		_, err := syscall.ForkExec("Exec", []string{"Exec", "dont"}, &attr)
 		if err != nil {
 			fmt.Printf("Err: %v\n", err)
 		}
