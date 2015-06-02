@@ -2,6 +2,8 @@
 
 const int GLOB = 0;
 
+// Note! RValue references must not be named! point of move( x ) is to remove
+// name from scope to force a rvalue reference.
 int main(void)
 {
   // lvalue

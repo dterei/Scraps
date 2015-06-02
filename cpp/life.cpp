@@ -10,7 +10,7 @@ int main(void)
 {
   {
     C c;
-    // delete c; -- will throw segfault
+    delete &c; // will throw segfault
   }
   return 0;
 }

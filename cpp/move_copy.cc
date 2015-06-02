@@ -1,96 +1,93 @@
 #include <iostream>
 
+using namespace std;
+
 class C
 {
-private:
-  int i_;
 public:
-  /* construct */
-  C(int i):i_{i}    { std::cout << "C(" << i_ << ")\n"; }
+  int i_;
 
-  /* copy */
-  C(const C& c):i_{c.i_} { std::cout << "C(&)\n"; }
-
-  /* move */
-  C(C&& c):i_{c.i_} { std::cout << "C(&&)\n"; }
-
-  /* destructor */
-  ~C() { std::cout << "~C(" << i_ << ")\n"; }
+  C(int i) : i_{i}         { cout << "C(" << i_ << ")\n"; }
+  C(const C& c) : i_{c.i_} { cout << "C(&)\n"; }
+  C(C&& c) : i_{c.i_}      { cout << "C(&&)\n"; }
+  ~C()                     { cout << "~C(" << i_ << ")\n"; i_ = -99; }
 
   C& operator=(const C& c) {
     std::cout << "op=(&)\n";
-    if (this == &c) { return *this; }
-    i_ = c.i_;
+    if (this != &c) { i_ = c.i_; }
     return *this;
   }
 
   C& operator=(C&& c) {
     std::cout << "op=(&&)\n";
-    if (this == &c) { return *this; }
-    i_ = c.i_;
-    c.i_ = -c.i_;
+    if (this != &c) { i_ = c.i_; c.i_ = -1; }
     return *this;
   }
-
 };
+
+static C global_c { 0 };
+
+// return by value (copy)
+C valueC() { return C( 1 ); }
+// ^ although this is suggested way to return as C++ mandates that compilers
+// perform copy elision of return values (return value optimization [RVO]).
+
+// heap allocate and return ptr
+C * ptrC() { return new C( 2 ); }
 
 // invalid since actually return stack memory, and c is destructed on function
 // return.
-C &mkc1()
+C & ref1C()
 {
-  C c {1};
+  C c {3};
   return c;
 }
 
-// valid -- but copies to return
-C mkc2()
+// valid! a reference is just a pointer that can't be null, so just returning
+// that.
+C & ref2C()
 {
-  C c {2};
-  return c;
-}
-
-// still invalid as we make a copy of heap allocated 'c' and return a reference
-// to that, copy lives on stack.
-C &mkc3()
-{
-  C* c = new C(3);
+  C* c = new C(4);
   return *c;
 }
 
-C &&mkc4()
-{
-  return {4};
-}
+// valid as life-time greater than ref3C().
+C & ref3C() { return global_c; }
+
+// return rvalue refernce -- invalid as dcon called on return
+C && rvalC() { return {5}; }
 
 void test(void)
 {
-  // return lvalue reference
-  std::cout << "mkc1 -- C&\n";
-  C& cc1 = mkc1();
+  {
+    cout << "\nTest return semantics:" << endl;
+    C    cc1 = valueC();
+    C *  cc2 = ptrC();
+    C &  cc3 = ref1C();
+    C &  cc4 = ref2C();
+    delete &cc4;
+    C &  cc5 = ref3C();
+    C && cc6 = rvalC();
+  }
 
-  // cc1 has already been destructed!
+  {
+    cout << "\nTest copy semantics:" << endl;
+    C cc1 { 1 };
 
-  // return by value
-  std::cout << "mkc2 -- C\n";
-  C cc2 = mkc2();
+    C cc2 { cc1 }; // copy-conc
 
-  // Construct by copy
-  C cc3 = cc2;
+    // uses copy constructor! copy-assign only used when overriding existing C.
+    C cc3 = const_cast<const C &>( cc1 );
 
-  // return by reference (but heap allocated)
-  std::cout << "mkc3 -- C*\n";
-  C cc4 = mkc3();
+    // RVO used, so just runs regular constructor
+    C cc4 { valueC() };
 
-  C cc5 {5};
+    C cc5 { move( cc1 ) }; // uses move-constructor
+    cc2 = cc1; // uses copy-assign
+    cc2 = move( cc3 ); // uses move-assign
+  }
 
-  // assingment operator
-  cc5 = cc2;
-
-  // move operator
-  td::cout << "mkc4 -- C*\n";
-  C cc6 = mkc4();
-  cc6 = std::move(cc5); // static_cast<C&&>(cc5);
-  cc6 = {6};
+  cout << "\nTest global semantics:" << endl;
 }
 
 int main(void)

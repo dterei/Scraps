@@ -3,16 +3,17 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	priority_queue<int,vector<int>,greater<int> > q;
+	priority_queue< int, vector<int>, greater<int> > q;
 	srand(time(0));
 
-	cout << "Generating 100 random numbers and taking 10 largest.";
+	cout << "Generating 100 random numbers and taking 10 largest." << endl;
 	for( int i = 0; i != 100; ++i ) {
 		if (q.size() >= 10) q.pop();
 		q.push(rand()%100);
 	}
 
-	cout << "Min-heap, popped one by one: ";
+	cout << "Min-heap, popped one by one: " << endl;
+  cout << "  ";
 	while( ! q.empty() ) {
 		cout << q.top() << ' ';
 		q.pop();
