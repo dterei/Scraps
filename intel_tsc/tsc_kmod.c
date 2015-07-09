@@ -1,3 +1,7 @@
+// Measure time using RTSC but in the kernel (as a loadable module) to obtain
+// exclusive CPU access.
+//
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
@@ -52,10 +56,10 @@ void inline Filltimes(uint64_t **times) {
 
       /*call the function to measure here*/
 
-      asm volatile( "CPUID\n\t"
-                    "RDTSC\n\t"
+      asm volatile( "RDTSCP\n\t"
                     "mov %%edx, %0\n\t"
                     "mov %%eax, %1\n\t"
+                    "CPUID\n\t"
                     : "=r" (cycles_high1), "=r" (cycles_low1)
                     :: "%rax", "%rbx", "%rcx", "%rdx" );
 

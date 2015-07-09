@@ -5,17 +5,16 @@ obj-m := tsc_kmod.o
 else
 # normal makefile
 KDIR ?= /lib/modules/`uname -r`/build
+CFLAGS = -O3
 
-all: tsc1 tsc2 tsc3
-
-tsc3: tsc3.c tsc.h clock.h
-	$(CC)     tsc3.c	-o tsc3
+all: tsc_user clock_bench
 
 kmod:
 	$(MAKE) -C $(KDIR) M=$$PWD
 
 .PHONY: clean
 clean:
-	rm -f tsc1 tsc2 tsc3
+	@rm -f tsc_user clock_bench
+	@rm -f *.o
 
 endif

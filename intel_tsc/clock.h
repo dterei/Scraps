@@ -1,9 +1,13 @@
-/* clock_gettime support  */
+// Utilities for benchmarking different `clock_gettime` clocks.
+//
+
 #ifndef __CLOCK_HDR
 #define __CLOCK_HDR
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <sys/time.h>
 #include <time.h>
 
@@ -23,21 +27,24 @@
 /* #define CLOCK CLOCK_PROCESS_CPUTIME_ID // 500 cycles */
 // #define CLOCK CLOCK_THREAD_CPUTIME_ID // 380 cycles
 
-static inline unsigned long clock_ns(void)
+/* get the current time in nanoseconds. */
+static inline uint64_t clock_ns(clockid_t clock)
 {
 	struct timespec t;
-  clock_gettime(CLOCK, &t);
-	return (unsigned long) t.tv_sec * SS + t.tv_nsec * NS;
+  clock_gettime(clock, &t);
+	return (uint64_t) t.tv_sec * SS + t.tv_nsec * NS;
 }
 
-static inline unsigned long clock_overhead(clockid_t clock)
+/* measure the cost to call `clock_gettime` for the specified clock. */
+static inline uint64_t clock_overhead(clockid_t clock)
 {
 	int i;
 	struct timespec t;
-	unsigned long t0, t1, overhead = ~0UL, tsc_overhead;
+	uint64_t  t0, t1, overhead = ~0, tsc_overhead;
 
   tsc_overhead = measure_tsc_overhead();
 
+  // we run N times and take the min
 	for (i = 0; i < N; i++) {
 		t0 = rdtsc();
 		clock_gettime(clock, &t);
@@ -49,19 +56,18 @@ static inline unsigned long clock_overhead(clockid_t clock)
   return overhead - tsc_overhead;
 }
 
-static measure_clock(clockid_t clock)
+/* measure + print the cost to call `clock_gettime` for the specified clock. */
+static inline measure_clock(clockid_t clock)
 {
 	int i;
 	struct timespec t;
-	unsigned long t0, t1, overhead;
-
-  overhead = measure_tsc_overhead();
+	uint64_t t0, t1, overhead;
 
   clock_getres(clock, &t);
   printf("clock_getres: %ld seconds | %ld nanoseconds\n", t.tv_sec, t.tv_nsec);
 
   overhead = clock_overhead(clock);
-
-	printf("clock_gettime: %ld cycles\n", overhead);
+	printf("clock_gettime: " PRIu64 " cycles\n", overhead);
 }
+
 #endif

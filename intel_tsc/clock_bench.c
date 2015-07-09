@@ -1,3 +1,6 @@
+// Benchmark different clock and timing methods
+//
+
 #include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
