@@ -26,26 +26,26 @@ uint64_t tsc_overhead;
 // get the current time in nanoseconds
 inline uint64_t clock_ns()
 {
-	struct timespec t;
+  struct timespec t;
   clock_gettime(CLOCK, &t);
-	return (uint64_t) t.tv_sec * SS + t.tv_nsec * NS;
+  return (uint64_t) t.tv_sec * SS + t.tv_nsec * NS;
 }
 
 // measure the cost to call `clock_gettime` for the specified clock
 uint64_t clock_overhead()
 {
-	int i;
-	struct timespec t;
-	uint64_t  t0, t1, overhead = ~0;
+  int i;
+  struct timespec t;
+  uint64_t  t0, t1, overhead = ~0;
 
   // we run N times and take the min
-	for (i = 0; i < N; i++) {
-		t0 = bench_start();
-		clock_gettime(CLOCK, &t);
-		t1 = bench_end();
-		if (t1 - t0 < overhead)
-			overhead = t1 - t0;
-	}
+  for (i = 0; i < N; i++) {
+    t0 = bench_start();
+    clock_gettime(CLOCK, &t);
+    t1 = bench_end();
+    if (t1 - t0 < overhead)
+      overhead = t1 - t0;
+  }
 
   return overhead - tsc_overhead;
 }

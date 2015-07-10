@@ -12,21 +12,21 @@
 
 static inline void _sync_tsc(void)
 {
-	asm volatile("cpuid" : : : "%rax", "%rbx", "%rcx", "%rdx");
+  asm volatile("cpuid" : : : "%rax", "%rbx", "%rcx", "%rdx");
 }
 
 static inline uint64_t _rdtsc(void)
 {
-	unsigned a, d;
-	asm volatile("rdtsc" : "=a" (a), "=d" (d) : : "%rbx", "%rcx");
-	return ((uint64_t) a) | (((uint64_t) d) << 32);
+  unsigned a, d;
+  asm volatile("rdtsc" : "=a" (a), "=d" (d) : : "%rbx", "%rcx");
+  return ((uint64_t) a) | (((uint64_t) d) << 32);
 }
 
 static inline uint64_t _rdtscp(void)
 {
-	unsigned a, d;
-	asm volatile("rdtscp" : "=a" (a), "=d" (d) : : "%rbx", "%rcx");
-	return ((uint64_t) a) | (((uint64_t) d) << 32);
+  unsigned a, d;
+  asm volatile("rdtscp" : "=a" (a), "=d" (d) : : "%rbx", "%rcx");
+  return ((uint64_t) a) | (((uint64_t) d) << 32);
 }
 
 static inline uint64_t bench_start(void)
@@ -66,18 +66,18 @@ static inline uint64_t bench_end(void)
 
 static uint64_t measure_tsc_overhead(void)
 {
-	uint64_t t0, t1, overhead = ~0;
-	int i;
+  uint64_t t0, t1, overhead = ~0;
+  int i;
 
-	for (i = 0; i < TSC_OVERHEAD_N; i++) {
-		t0 = bench_start();
-		asm volatile("");
-		t1 = bench_end();
-		if (t1 - t0 < overhead)
-			overhead = t1 - t0;
-	}
+  for (i = 0; i < TSC_OVERHEAD_N; i++) {
+    t0 = bench_start();
+    asm volatile("");
+    t1 = bench_end();
+    if (t1 - t0 < overhead)
+      overhead = t1 - t0;
+  }
 
-	return overhead;
+  return overhead;
 }
 
 /*

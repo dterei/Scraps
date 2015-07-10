@@ -27,25 +27,25 @@
 
 #include "tsc.h"
 
-#define N	100000
+#define N 100000
 
 /* measure the cost to call `time`. */
 void time_overhead()
 {
-	int i;
-	uint64_t t0, t1, tsc_overhead;
+  int i;
+  uint64_t t0, t1, tsc_overhead;
   uint64_t min, max, avg;
   uint64_t times[N];
 
   tsc_overhead = measure_tsc_overhead();
 
   // we run N times and take the min
-	for (i = 0; i < N; i++) {
-		t0 = bench_start();
-		time(NULL);
-		t1 = bench_end();
+  for (i = 0; i < N; i++) {
+    t0 = bench_start();
+    time(NULL);
+    t1 = bench_end();
     times[i] = t1 - t0 - tsc_overhead;
-	}
+  }
   
   min = ~0, max = 0, avg = 0;
   for (i = 0; i < N; i++) {
@@ -57,29 +57,29 @@ void time_overhead()
   
   printf("\n- TIME -\n");
   printf("time_getres: 1s\n");
-	printf("Cost (min): %" PRIu64 " cycles\n", min);
+  printf("Cost (min): %" PRIu64 " cycles\n", min);
   printf("Cost (avg): %" PRIu64 " cycles\n", avg);
-	printf("Cost (max): %" PRIu64 " cycles\n", max);
+  printf("Cost (max): %" PRIu64 " cycles\n", max);
 }
 
 /* measure the cost to call `ftime`. */
 void ftime_overhead()
 {
-	int i;
-	struct timeb t;
-	uint64_t t0, t1, tsc_overhead;
+  int i;
+  struct timeb t;
+  uint64_t t0, t1, tsc_overhead;
   uint64_t min, max, avg;
   uint64_t times[N];
 
   tsc_overhead = measure_tsc_overhead();
 
   // we run N times and take the min
-	for (i = 0; i < N; i++) {
-		t0 = bench_start();
-		ftime(&t);
-		t1 = bench_end();
+  for (i = 0; i < N; i++) {
+    t0 = bench_start();
+    ftime(&t);
+    t1 = bench_end();
     times[i] = t1 - t0 - tsc_overhead;
-	}
+  }
   
   min = ~0, max = 0, avg = 0;
   for (i = 0; i < N; i++) {
@@ -91,29 +91,29 @@ void ftime_overhead()
   
   printf("\n- FTIME -\n");
   printf("ftime_getres: 1ms\n");
-	printf("Cost (min): %" PRIu64 " cycles\n", min);
+  printf("Cost (min): %" PRIu64 " cycles\n", min);
   printf("Cost (avg): %" PRIu64 " cycles\n", avg);
-	printf("Cost (max): %" PRIu64 " cycles\n", max);
+  printf("Cost (max): %" PRIu64 " cycles\n", max);
 }
 
 /* measure the cost to call `gettimeofday`. */
 void gettimeofday_overhead()
 {
-	int i;
-	struct timeval t;
-	uint64_t t0, t1, tsc_overhead;
+  int i;
+  struct timeval t;
+  uint64_t t0, t1, tsc_overhead;
   uint64_t min, max, avg;
   uint64_t times[N];
 
   tsc_overhead = measure_tsc_overhead();
 
   // we run N times and take the min
-	for (i = 0; i < N; i++) {
-		t0 = bench_start();
-		gettimeofday(&t, NULL);
-		t1 = bench_end();
+  for (i = 0; i < N; i++) {
+    t0 = bench_start();
+    gettimeofday(&t, NULL);
+    t1 = bench_end();
     times[i] = t1 - t0 - tsc_overhead;
-	}
+  }
   
   min = ~0, max = 0, avg = 0;
   for (i = 0; i < N; i++) {
@@ -125,29 +125,29 @@ void gettimeofday_overhead()
   
   printf("\n- GETTIMEOFDAY -\n");
   printf("gettimeofday_getres: 1us (?)\n");
-	printf("Cost (min): %" PRIu64 " cycles\n", min);
+  printf("Cost (min): %" PRIu64 " cycles\n", min);
   printf("Cost (avg): %" PRIu64 " cycles\n", avg);
-	printf("Cost (max): %" PRIu64 " cycles\n", max);
+  printf("Cost (max): %" PRIu64 " cycles\n", max);
 }
 
 /* measure the cost to call `clock_gettime` for the specified clock. */
 void clock_overhead(clockid_t clock)
 {
-	int i;
-	struct timespec t;
-	uint64_t t0, t1, tsc_overhead;
+  int i;
+  struct timespec t;
+  uint64_t t0, t1, tsc_overhead;
   uint64_t min, max, avg;
   uint64_t times[N];
 
   tsc_overhead = measure_tsc_overhead();
 
   // we run N times and take the min
-	for (i = 0; i < N; i++) {
-		t0 = bench_start();
-		clock_gettime(clock, &t);
-		t1 = bench_end();
+  for (i = 0; i < N; i++) {
+    t0 = bench_start();
+    clock_gettime(clock, &t);
+    t1 = bench_end();
     times[i] = t1 - t0 - tsc_overhead;
-	}
+  }
 
   
   min = ~0, max = 0, avg = 0;
@@ -158,15 +158,15 @@ void clock_overhead(clockid_t clock)
   }
   avg /= N;
   
-	printf("Cost (min): %" PRIu64 " cycles\n", min);
+  printf("Cost (min): %" PRIu64 " cycles\n", min);
   printf("Cost (avg): %" PRIu64 " cycles\n", avg);
-	printf("Cost (max): %" PRIu64 " cycles\n", max);
+  printf("Cost (max): %" PRIu64 " cycles\n", max);
 }
 
 /* measure + print the cost to call `clock_gettime` for the specified clock. */
 void measure_clock(const char * ctype, clockid_t clock)
 {
-	struct timespec t;
+  struct timespec t;
 
   printf("\n- %s -\n", ctype);
 
@@ -182,7 +182,7 @@ void measure_clock(const char * ctype, clockid_t clock)
 /* benchmark various clock sources */
 int main(void)
 {
-	printf("=> Testing Clock...\n");
+  printf("=> Testing Clock...\n");
   time_overhead();
   ftime_overhead();
   gettimeofday_overhead();
