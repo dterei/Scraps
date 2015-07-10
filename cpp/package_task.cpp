@@ -17,6 +17,16 @@ void task_lambda()
     task(2, 9);
  
     std::cout << "task_lambda:\t" << result.get() << '\n';
+
+    // XXX: We can reset a packaged_task to enable us to re-execute the
+    // function. We only have one shared state though, so wipes any exisiting
+    // result.
+    task.reset();
+    std::future<int> r2 = task.get_future();
+    
+    task(3,7);
+
+    std::cout << "task_lambda (reset):\t" << r2.get() << '\n';
 }
  
 void task_bind()
@@ -33,6 +43,8 @@ void task_thread()
 {
     std::packaged_task<int(int,int)> task(f);
     std::future<int> result = task.get_future();
+    // XXX: Can only retrieve one future!
+    // std::future<int> r2 = task.get_future();
  
     std::thread task_td(std::move(task), 2, 10);
     task_td.join();
