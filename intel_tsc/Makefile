@@ -7,14 +7,14 @@ else
 KDIR ?= /lib/modules/`uname -r`/build
 CFLAGS = -O3
 
-all: tsc_user clock_bench
+all: using_tsc eval_clocks benchmarking
 
 kmod:
 	$(MAKE) -C $(KDIR) M=$$PWD
 
 .PHONY: clean
 clean:
-	@rm -f tsc_user clock_bench
+	@rm -f using_tsc eval_clocks benchmarking
 	@rm -f *.o
 
 endif

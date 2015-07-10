@@ -1,4 +1,5 @@
-// Basic RDTSC test to time a load from memory.
+// Walkthrough of how to use the TSC register to benchmark code. See the Intel
+// pdf for further info.
 //
 
 #include <inttypes.h>
@@ -6,8 +7,8 @@
 
 #include "tsc.h"
 
-// basic load to benchmark
-void load(volatile int *var)
+// basic store to benchmark
+void store(volatile int *var)
 {
   asm volatile("");
   (*var) = 1;
@@ -28,7 +29,7 @@ void rdtsc()
                 : "=r" (cycles_high), "=r" (cycles_low)
                 :: "%rax", "%rdx" );
 
-  load(&variable);
+  store(&variable);
 
   asm volatile( "RDTSC\n\t" // read clock
                 "mov %%edx, %0\n\t"
@@ -67,7 +68,7 @@ void rdtsc_cpuid()
                 : "=r" (cycles_high), "=r" (cycles_low)
                 :: "%rax", "%rbx", "%rcx", "%rdx" );
 
-  load(&variable);
+  store(&variable);
 
   asm volatile( "CPUID\n\t" // serialize -- high variance!
                 "RDTSC\n\t" // read clock
@@ -103,7 +104,7 @@ void rdtscp()
                 : "=r" (cycles_high), "=r" (cycles_low)
                 :: "%rax", "%rbx", "%rcx", "%rdx" );
 
-  load(&variable);
+  store(&variable);
 
   asm volatile( "RDTSCP\n\t" // read clock + serialize
                 "mov %%edx, %0\n\t"
@@ -137,7 +138,7 @@ void rdtscp_cpuid()
                 : "=r" (cycles_high), "=r" (cycles_low)
                 :: "%rax", "%rbx", "%rcx", "%rdx" );
 
-  load(&variable);
+  store(&variable);
 
   asm volatile( "RDTSCP\n\t" // read clock + serialize
                 "mov %%edx, %0\n\t"
@@ -152,13 +153,15 @@ void rdtscp_cpuid()
   printf("RDTSCP_CPUID: Execution took %" PRIu64 " clock cycles\n", end - start);
 }
 
+// Here we use our tsc.h implementation (should be equivalent to
+// `rdtscp_cpuid`).
 void lib_tsc()
 {
   uint64_t start, end, overhead;
   int variable = 0;
 
   start = bench_start();
-  load(&variable);
+  store(&variable);
   end = bench_end();
 
   printf("LIB_TSC     : Execution took %" PRIu64 " clock cycles\n", end - start);
@@ -168,7 +171,7 @@ void lib_tsc()
   printf("LIB_TSC     : TSC overhead is %" PRIu64 " clock cycles\n", overhead );
 }
 
-
+// Test our various tsc attempts
 int main(void)
 {
   rdtscp_cpuid();
@@ -176,5 +179,7 @@ int main(void)
   rdtsc_cpuid();
   rdtscp();
   lib_tsc();
+
+  return 0;
 }
 
