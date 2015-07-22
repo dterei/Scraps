@@ -22,6 +22,7 @@
 #define N 10000
 
 uint64_t tsc_overhead;
+uint64_t clk_overhead;
 
 // get the current time in nanoseconds
 inline uint64_t clock_ns()
@@ -100,7 +101,7 @@ void bench_tsc_clock(unsigned int fibn)
   printf("=> TSC Vs. Clock accuray (need to adjust TSC freq to machine)\n");
   printf("Testing `fib(%d)`\n", fibn);
 
-  uint64_t t0, t1, coverhead;
+  uint64_t t0, t1;
   int i;
 
   t0 = bench_start();
@@ -116,17 +117,42 @@ void bench_tsc_clock(unsigned int fibn)
     fib(fibn);
   }
   t1 = clock_ns();
-  coverhead = clock_overhead(CLOCK);
-  printf("CLOCK: %" PRIu64 " ns\n", (t1 - t0 - coverhead) / N);
+  printf("CLOCK: %" PRIu64 " ns\n", (t1 - t0 - clk_overhead) / N);
 
   printf("\n=> TSC Vs. Clock call-cost\n");
   printf("TSC  : %" PRIu64 " cycles\n", tsc_overhead);
-  printf("CLOCK: %" PRIu64 " cycles\n\n", coverhead);
+  printf("CLOCK: %" PRIu64 " cycles\n\n", clk_overhead);
+}
+
+void bench_sleep(void)
+{
+  printf("\n=> TSC Vs. Clock accuray (need to adjust TSC freq to machine)\n");
+  printf("Testing `sleep()`");
+
+  uint64_t t0, t1;
+  int i;
+
+  t0 = bench_start();
+  sleep(2);
+  t1 = bench_start();
+  printf("TSC  : %" PRIu64 " cycles\n", (t1 - t0 - tsc_overhead) / N);
+  printf("TSC  : %" PRIu64 " ns\n", cycles_to_ns((t1 - t0 - tsc_overhead) / N));
+
+  t0 = clock_ns();
+  sleep(2);
+  t1 = clock_ns();
+  printf("CLOCK: %" PRIu64 " ns\n", (t1 - t0 - clk_overhead) / N);
+
+  printf("\n=> TSC Vs. Clock call-cost\n");
+  printf("TSC  : %" PRIu64 " cycles\n", tsc_overhead);
+  printf("CLOCK: %" PRIu64 " cycles\n\n", clk_overhead);
+
 }
 
 int main(void)
 {
   tsc_overhead = measure_tsc_overhead();
+  clk_overhead = clock_overhead(CLOCK);
 
   bench_tsc_clock(5);
   bench_tsc_clock(10);
@@ -135,6 +161,8 @@ int main(void)
   printf("=> Bench code\n");
   bench_syscall();
   bench_fib();
+
+  bench_sleep();
 
   return 0;
 }
