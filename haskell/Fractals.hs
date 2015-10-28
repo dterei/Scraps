@@ -80,9 +80,9 @@ fade (r,g,b,a) = (r,g,b,a-1)
 spiralRays :: Float -> Float -> Int -> Colour -> Line -> Picture
 spiralRays angle scale = spiralRays'
   where
-    spiralRays' n colour line@(p1, p2)
+    spiralRays' n colour l@(p1, p2)
       | n <= 0    = []
       | otherwise = (colour, [p1, p2]) : spiralRays' (n-1) newColour newLine
       where
         newColour = fade colour
-        newLine   = scaleLine scale $ rotateLine angle line
+        newLine   = scaleLine scale $ rotateLine angle l
