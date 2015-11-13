@@ -1,13 +1,14 @@
 /*
  * shm-posix-client - client program to demonstrate posix shared memory.
  */
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <errno.h>
-#include <fcntl.h>
 #include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define SHMSZ     10737418240 // 10GB
 #define SHMNAME   "mymemory"
@@ -21,7 +22,7 @@ int main()
   /*
    * Open the segment.
    */
-  if ((shmid = shm_open(SHMNAME, O_RDWR)) < 0) {
+  if ((shmid = shm_open(SHMNAME, O_RDWR, 0666)) < 0) {
     perror("shm_open");
     exit(1);
   }

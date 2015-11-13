@@ -1,16 +1,14 @@
 /*
  * shm-posix-server - server program to demonstrate posix shared memory.
  */
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/ipc.h>
 #include <sys/mman.h>
-#include <sys/shm.h>
-#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define SHMSZ     10737418240 // 10GB
 #define SHMNAME   "mymemory"
@@ -48,7 +46,7 @@ int main(void)
    */
   if ((shm = mmap(BASEADR, SHMSZ,
                   PROT_READ | PROT_WRITE,
-                  MAP_FILE | MAP_SHARED,
+                  MAP_FILE | MAP_SHARED | MAP_FIXED,
                   shmid, 0)) == MAP_FAILED) {
     perror("mmap");
     exit(1);
