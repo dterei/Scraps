@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <system_error>
 
 void our_terminate(void);
 
@@ -15,7 +16,10 @@ int main(void)
   // std::terminate();
   // throw 20;
   // throw 'a';
-  throw std::runtime_error("error!");
+  // throw std::runtime_error("error!");
+
+  // (int, error_category, string = ""
+  throw std::system_error(2, std::system_category(), "system call failed!");
 }
 
 void our_terminate(void)
@@ -33,6 +37,12 @@ void our_terminate(void)
   if (pexc) {
     try {
       std::rethrow_exception(pexc);
+    } catch (const std::system_error &e) {
+      std::cerr << "Caught std::system_error!" << std::endl;
+      std::cerr << " - what: " << e.what() << std::endl;
+      std::cerr << " - code.value: " << e.code().value() << std::endl;
+      std::cerr << " - code.message: " << e.code().message() << std::endl;
+      std::cerr << " - code.category.name: " << e.code().category().name() << std::endl;
     } catch (const std::runtime_error &e) {
       std::cerr << "Caught std::runtime_error: " << e.what() << std::endl;
     } catch (const std::exception &e) {
