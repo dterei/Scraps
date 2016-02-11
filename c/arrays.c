@@ -42,6 +42,7 @@ int main(void)
 	printf("Head of array => %d\n", one);
 	printf("Head of array => %d\n", prev);
 	printf("Head of array => %d\n", two);
+
 	return 0;
 }
 
