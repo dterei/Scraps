@@ -5,3 +5,5 @@ shm_mmap_server
 shm_posix_client
 shm_posix_server
 shm_server
+tls
+tls_glibc
