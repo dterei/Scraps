@@ -7,3 +7,4 @@ shm_posix_server
 shm_server
 tls
 tls_glibc
+tls_set_thread

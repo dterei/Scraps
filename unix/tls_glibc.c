@@ -9,26 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/* FS Support */
-int arch_prctl(int code, unsigned long addr);
-
-void set_fs(void * addr)
-{
-  if (arch_prctl(ARCH_SET_FS, (unsigned long) addr)) {
-    perror("arch_prctl(ARCH_SET_FS)");
-    exit(EXIT_FAILURE);
-  }
-}
-
-unsigned long get_fs(void)
-{
-  unsigned long fs_addr;
-  if (arch_prctl(ARCH_GET_FS, (unsigned long) &fs_addr)) {
-    perror("arch_prctl(ARCH_GET_FS)");
-    exit(EXIT_FAILURE);
-  }
-  return fs_addr;
-}
+#include "fsgs.h"
 
 /* glibc / pthread */
 int new_thread(void* (*fn)(void*))
@@ -55,6 +36,7 @@ void* child(void * arg)
 {
   printf("[child] started\n");
   printf("[child] tls fs: %p\n", (void*) get_fs());
+  printf("[child] tls gs: %p\n", (void*) get_gs());
   print_id("child", 0, &thread_i);
   usleep(500000);
   return NULL;
@@ -66,6 +48,7 @@ int main(void)
 
   printf("[main_] started\n");
   printf("[main_] tls fs: %p\n", (void*) get_fs());
+  printf("[main_] tls gs: %p\n", (void*) get_gs());
 
   tid = new_thread(&child);
   printf("[main_] child launched: %d\n", tid);
