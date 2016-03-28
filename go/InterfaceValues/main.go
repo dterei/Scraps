@@ -1,7 +1,7 @@
 package main
 
-// safe   -- 7.01ns/op
-// unsafe -- 0.60ns/op
+// safe   -- 15.9ns/op
+// unsafe --  1.6ns/op
 
 import (
 	"fmt"
@@ -12,9 +12,13 @@ import (
 // can we unsafe cast to unwrap all the interface layers? Or is the value in
 // memory different now? No! We have a new layer of indirection...
 func unsafeErr(err error) uintptr {
-	p1 := (uintptr)(unsafe.Pointer(&err))
-	p2 := (*uintptr)(unsafe.Pointer(p1+8))
-	return *(*uintptr)(unsafe.Pointer(*p2))
+	if err != nil {
+		p1 := (uintptr)(unsafe.Pointer(&err))
+		p2 := (*uintptr)(unsafe.Pointer(p1+8))
+		return *(*uintptr)(unsafe.Pointer(*p2))
+	} else {
+		return 0
+	}
 }
 
 // Safe way, type assertion
