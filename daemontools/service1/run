@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+# Allow up to 10 10MB logs
+./cmd
+# | multilog t s10485760 n10 ./log
