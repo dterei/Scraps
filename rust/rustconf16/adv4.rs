@@ -26,14 +26,18 @@ impl<K: Eq, V> Map<K, V> {
         Map { elements: vec![] }
     }
 
-    pub fn insert(&mut self, key: K, value: V) {
-        for pair in &mut self.elements {
-            if pair.0 == key {
-                pair.1 = value;
-                return;
-            }
-        }
-        self.elements.push((key, value));
+    // pub fn insert<'map>(&'map mut self, key: K, value: V) {
+    //     for pair in &mut self.elements {
+    //         if pair.0 == key {
+    //             pair.1 = value;
+    //             return;
+    //         }
+    //     }
+    //     self.elements.push((key, value));
+    // }
+
+    pub fn insert<'map>(&'map mut self, key: K, value: V) -> FoundEntry<'map, K, V> {
+        self.entry(key).or_insert(value)
     }
 
     pub fn get(&self, key: &K) -> Option<&V> {
@@ -94,13 +98,10 @@ pub struct NotFoundEntry<'map, K, V>
 }
 
 impl<'map, K: Eq, V> Entry<'map, K, V> {
-    fn or_insert(self, value: V) -> &'map mut V {
+    fn or_insert(self, value: V) -> FoundEntry<'map, K, V> {
         match self {
-            Entry::Found(mut data) => &mut data.elements[data.index].1,
-            Entry::NotFound(mut data) => {
-                data.elements.push((data.key, value));
-                &mut data.elements.last_mut().unwrap().1
-            }
+            Entry::Found(mut data) => data,
+            Entry::NotFound(mut data) => data.insert(value),
         }
     }
 }
@@ -110,15 +111,22 @@ impl<'map, K: Eq, V> FoundEntry<'map, K, V> {
         &mut self.elements[self.index].1
     }
 
-    fn remove(self) -> V {
-        unimplemented!()
+    fn remove(self) -> (NotFoundEntry<'map, K, V>, V)  {
+        let (k, v) = self.elements.remove(self.index);
+        (NotFoundEntry {
+            key: k,
+            elements: self.elements,
+        }, v)
     }
 }
 
 impl<'map, K: Eq, V> NotFoundEntry<'map, K, V> {
-    fn insert(self, value: V) -> &'map mut V {
+    fn insert(self, value: V) -> FoundEntry<'map, K, V> {
         self.elements.push((self.key, value));
-        &mut self.elements.last_mut().unwrap().1
+        FoundEntry {
+            index: self.elements.len() - 1,
+            elements: self.elements,
+        }
     }
 }
 
@@ -126,7 +134,7 @@ impl<'map, K: Eq, V> NotFoundEntry<'map, K, V> {
 fn or_insert() {
     let mut map = Map::new();
     map.insert('a', format!("alpha"));
-    assert_eq!(map.entry('a').or_insert(format!("beta")), &format!("alpha"));
+    assert_eq!(map.entry('a').or_insert(format!("beta")).get(), &format!("alpha"));
 }
 
 #[test]
@@ -134,24 +142,24 @@ fn exercise_1() {
     let mut map = Map::new();
     map.insert('a', format!("alpha"));
     let data = match map.entry('a') {
-        Entry::Found(data) => data.remove(),
+        Entry::Found(data) => data.remove().1,
         Entry::NotFound(_) => panic!(),
     };
     assert_eq!(data, format!("alpha"));
 }
 
-//#[test]
-//fn exercise_2() {
-//    let mut map = Map::new();
-//    map.insert('a', format!("alpha"));
-//
-//    {
-//        let not_found = match map.entry('a') {
-//            Entry::NotFound(data) => data,
-//            Entry::Found(data) => data.remove().0,
-//        };
-//        not_found.insert(format!("beta"));
-//    }
-//
-//    assert_eq!(map.get(&'a'), Some(&format!("beta")));
-//}
+#[test]
+fn exercise_2() {
+   let mut map = Map::new();
+   map.insert('a', format!("alpha"));
+
+   {
+       let not_found = match map.entry('a') {
+           Entry::NotFound(data) => data,
+           Entry::Found(data) => data.remove().0,
+       };
+       not_found.insert(format!("beta"));
+   }
+
+   assert_eq!(map.get(&'a'), Some(&format!("beta")));
+}

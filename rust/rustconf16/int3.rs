@@ -27,6 +27,8 @@ impl Print for char {
     fn print_with_indent(&self, indent: usize) {
         // Goal: print the given character at the given indentation level,
         // surrounding the character by single quotes
+        print_indent(indent);
+        println!("'{}'", self);
     }
 }
 
@@ -34,7 +36,13 @@ impl<T: Print> Print for Vec<T> {
     fn print_with_indent(&self, indent: usize) {
         // Goal: print the contents of the vector, indenting items by two
         // additional characters, and surrounding the vector by `Vec [` and `]`.
-        for item in self {}
+        print_indent(indent);
+        println!("Vec [");
+        for item in self {
+            item.print_with_indent(indent + 2);
+        }
+        print_indent(indent);
+        println!("]")
     }
 }
 

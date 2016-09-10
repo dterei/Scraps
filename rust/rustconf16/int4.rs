@@ -1,8 +1,13 @@
 #![allow(dead_code)]
 
-use std::f32::INFINITY;
+// use std::f32::INFINITY;
 use std::sync::Arc;
 use std::thread;
+use std::sync::mpsc::Sender;
+use std::sync::mpsc::Receiver;
+use std::sync::mpsc::channel;
+
+type StoreResult = (String,f32);
 
 struct Store {
     name: String,
@@ -65,23 +70,42 @@ fn build_stores() -> Vec<Store> {
 fn main() {
     let stores = build_stores();
 
+    // The Arc (reference counting) appears useless, but actually
+    // helps us avoid copying. Without using Arc, the `let
+    // shopping_list` below to give each thread their own copy would
+    // need to copy the entire vector. With Arc, we instead just copy
+    // a reference to the vector.
     let shopping_list = vec!["chocolate", "plush Mozilla dinosaur"];
     let shopping_list = Arc::new(shopping_list);
 
+    // Concurrency helpers
+    let (csnd, crcv) : (Sender<StoreResult>, Receiver<StoreResult>) = channel();
     let mut handles = vec![];
+
+    // Spawn a worker for each store
     for store in stores {
         let shopping_list = shopping_list.clone();
+        let csnd = csnd.clone();
+        // `move` here means move captured variables into the closure,
+        // don't copy.
         handles.push(thread::spawn(move || {
             let sum = store.total_price(&shopping_list);
-            (store.name, sum)
+            csnd.send((store.name, sum)).unwrap();
         }));
     }
 
-    let mut best : Option<isize> = None;
-    let mut best_price = INFINITY;
+    // // Goal: join the threads here!
+    // let mut best : Option<String> = None;
+    // let mut best_price = INFINITY;
+    // for h in handles {
+    //     match h.join() {
+    //         Ok((s,p)) => if p < best_price { best = Some(s) },
+    //         Err(_)    => {},
+    //     }
+    // }
+    // println!("--> Go to {}!", best.unwrap());
 
-    // Goal: join the threads here!
     // Extra credit: rewrite to use channels or mutexes.
-
-    println!("--> Go to {}!", best.unwrap());
+    let (best, _) = crcv.recv().unwrap();
+    println!("--> Go to {}!", best);
 }
