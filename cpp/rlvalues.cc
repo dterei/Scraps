@@ -5,9 +5,18 @@ const int GLOB = 0;
 class T {
 public:
   T(int t) : _t{t} { std::cout << "T()\n"; }
-  T(T &t) : _t{t._t} { std::cout << "T(&)\n"; }
-  T(T &&t) : _t{t._t} { std::cout << "T(&&)\n"; }
   ~T(void) { std::cout << "~T()\n"; }
+
+  T(const T &t) : _t{t._t} { std::cout << "T(&)\n"; }
+  T & operator=(const T &t) { std::cout << "=(T&)\n"; return *this; }
+  // T(const T &t) = delete;
+  // T & operator=(const T &t) = delete;
+
+  T(T &&t) : _t{t._t} { std::cout << "T(&&)\n"; }
+  T & operator=(T &&t) { std::cout << "=(T&&)\n"; return *this; }
+  // T(T &&) = delete;
+  // T & operator=(T &&) = delete;
+
 private:
   int _t;
 };
@@ -16,6 +25,16 @@ T getT(void)
 {
   T t{1};
   return t;
+}
+
+void fun(T && t)
+{
+  // You want to use an rvalue reference argument when moving the value inside
+  // the function, you can get away with a normal reference, but the type is
+  // less descriptive (i.e., doesn't communicate the move to the caller).
+  // T t2 = std::move(t);
+  std::cout << "fun(T&&)\n";
+  return;
 }
 
 // Note! RValue references must not be named! point of move( x ) is to remove
@@ -121,6 +140,10 @@ int main(void)
 
   // why rvalue references?
   T&& t = getT();
+
+  std::cout << "end...\n";
+
+  fun(std::move(t));
 
   return 0;
 }
