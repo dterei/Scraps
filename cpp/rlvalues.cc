@@ -2,6 +2,22 @@
 
 const int GLOB = 0;
 
+class T {
+public:
+  T(int t) : _t{t} { std::cout << "T()\n"; }
+  T(T &t) : _t{t._t} { std::cout << "T(&)\n"; }
+  T(T &&t) : _t{t._t} { std::cout << "T(&&)\n"; }
+  ~T(void) { std::cout << "~T()\n"; }
+private:
+  int _t;
+};
+
+T getT(void)
+{
+  T t{1};
+  return t;
+}
+
 // Note! RValue references must not be named! point of move( x ) is to remove
 // name from scope to force a rvalue reference.
 int main(void)
@@ -71,6 +87,8 @@ int main(void)
   
   const int &e = 0; // OK as since 'e' is a capability to only access (but not
                     // modify) a cell, we can create it from an rvalue.
+                    // Why want? If the type was expensive to copy, this gives
+                    // us a constant reference to a literal.
 
   // (int&) e = 1; // may work or fail depending on how the compiler allocated '0'.
   // const int &e = GLOB;
@@ -82,9 +100,6 @@ int main(void)
   // rvalue references
   int &&f = 0; // create cell (s4) and capability to access it 'f' + store 0;
   f = 1;
-
-  // Note: not clear to me if this is any different from `int &f = 0` if that
-  // was allowed syntax...
 
   // rvalue references (move)
   int &&g = 1;
@@ -103,6 +118,9 @@ int main(void)
 
   std::cout << "j: " << j << std::endl;
   std::cout << "&j: " << &j << std::endl;
+
+  // why rvalue references?
+  T&& t = getT();
 
   return 0;
 }
