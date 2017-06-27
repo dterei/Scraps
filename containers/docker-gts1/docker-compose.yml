@@ -1,0 +1,41 @@
+version: "3"
+services:
+  web:
+    image: dterei/get-started:part1
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+      - "8080:8080"
+    networks:
+      - webnet
+  redis:
+    image: redis
+    ports:
+      - "6739:6739"
+    volumes:
+      - ./data:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+networks:
+  # load-balanced network, all replicas share port 80 in RR
+  webnet: # use default settings - load-balanced overlay network
