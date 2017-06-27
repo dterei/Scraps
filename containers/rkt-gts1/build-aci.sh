@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ ! -x hello ]; then
   echo "Please build hello binary first"
   exit 1
