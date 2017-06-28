@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hello-node
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: serverjs
+    spec:
+      containers:
+      - name: hello-node
+        image: hello-node:v2
+        ports:
+        - containerPort: 8080
