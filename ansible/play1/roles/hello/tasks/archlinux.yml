@@ -1,0 +1,4 @@
+- name: Hello Arch God
+  command: echo "hello arch god"
+- name: Hello Arch Jesus
+  command: echo "hello arch jesus"
