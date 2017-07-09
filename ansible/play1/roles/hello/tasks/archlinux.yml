@@ -1,3 +1,7 @@
+- include_role:
+    name: pre_hello
+    tasks_from: archlinux
+
 - name: Hello Arch God
   command: echo "hello arch god"
 - name: Hello Arch Jesus

@@ -1,0 +1,3 @@
+- name: Pre Task Arch
+  command: echo "Pre Task Arch!"
+

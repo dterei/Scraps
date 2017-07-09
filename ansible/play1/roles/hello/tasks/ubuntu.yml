@@ -1,3 +1,7 @@
+- include_role:
+    name: pre_hello
+    tasks_from: ubuntu
+
 - name: Hello Ubuntu God
   command: echo "hello ubuntu god"
 - name: Hello Ubuntu Jesus
