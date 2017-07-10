@@ -1,0 +1,4 @@
+- include: "{{ ansible_distribution }}.yml"
+
+- name: Common Task
+  command: echo "Common Task!"

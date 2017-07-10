@@ -1,0 +1,4 @@
+- name: Hello Ubuntu God
+  command: echo "hello ubuntu god"
+- name: Hello Ubuntu Jesus
+  command: echo "hello ubuntu jesus"

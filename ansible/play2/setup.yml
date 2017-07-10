@@ -1,0 +1,22 @@
+- hosts: localhost
+  connection: local
+  roles:
+    - hello
+
+# - hosts: localhost
+#   connection: local
+#   gather_facts: true
+#   tasks:
+#   - group_by: key=os_{{ ansible_distribution }}
+
+# - hosts: os_Archlinux
+#   connection: local
+#   gather_facts: false
+#   tasks:
+#   - include_role: { name: hello, tasks_from: archlinux }
+#
+# - hosts: os_Ubuntu
+#   connection: local
+#   gather_facts: false
+#   tasks:
+#   - include_role: { name: hello, tasks_from: ubuntu }
