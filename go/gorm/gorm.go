@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	dsn = "root:spark@/rubrik_dev"
+	dsn = "root:spark@tcp(localhost:3306)/rubrik_dev"
 )
 
 func debug() error {
