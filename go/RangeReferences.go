@@ -14,7 +14,6 @@ func main() {
 		as = append(as, A{i})
 	}
 
-
 	// try to make a new slice that references values stored in example slice
 	as2 := make([]*A, len(as))
 	for i, a := range as {
