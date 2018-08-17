@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: exec-execlib
+  labels:
+    app: exec-execlib
+spec:
+  restartPolicy: Never
+  containers:
+  - name: exec-execlib
+    image: exec-execlib
+    imagePullPolicy: Never
