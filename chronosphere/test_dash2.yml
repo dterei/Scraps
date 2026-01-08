@@ -1,0 +1,24 @@
+api_version: v1/config
+kind: ClassicDashboard
+spec:
+  name: Azure Resources 3
+  slug: azure-resources-3
+  collection_slug: exocompute-monitoring
+  dashboard_json: |
+    { 
+      "title": "Terei Testing",
+      "description": "Testing chronoctl",
+      "panels": [
+        {
+          "title": "Total Exoclusters Count",
+          "description": "Total number of Exoclusters live",
+          "type": "stat",
+          "datasource": null,
+          "targets": [
+            {
+              "expr": "count(count by (exocompute_id) (last_over_time(spark_exocompute_azure_resource_properties:last{}[4h])))"
+            }
+          ]
+        }
+      ]
+    }

@@ -1,0 +1,10 @@
+title: "Terei Testing"
+description: "Testing chronoctl"
+layout: "classic"
+collection_slug: "exocompute-monitoring"
+panels:
+  - title: "Total Exoclusters Count"
+    description: "Total number of Exoclusters live"
+    type: "stat"
+    datasource: null
+    query: "count(count by (exocompute_id) (last_over_time(spark_exocompute_azure_resource_properties:last{}[4h])))"
